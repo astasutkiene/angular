@@ -30,11 +30,12 @@ function connect(callback) {
     });
 }
 
-function add(obj, collection) {
+function add(obj, collection, callback) {
    connect(function(dbo, client) {
        dbo.collection(collection).insertOne(obj, function(err, res) {
            if (err) throw err;
            console.log("1 document inserted");
+           callback(obj);
            client.close();
        });
    });
@@ -52,9 +53,28 @@ function get(collection, callback) {
 
 function put(_id, newObj, collection, callback) {
     connect(function(dbo, client) {
+
+        delete newObj._id;
         return dbo.collection(collection).update(
             {"_id": new mongo.ObjectID(_id)},
             newObj,
+            function(err, result) {
+                if (err) throw err;
+                callback();
+                client.close();
+            }
+        );
+    });
+}
+
+function del(ids, collection, callback) {
+    connect(function(dbo, client) {
+        var idsObjectsArr = [];
+        for (let i = 0; i < ids.length; i++) {
+            idsObjectsArr.push(new mongo.ObjectID(ids[i]));
+        }
+        return dbo.collection(collection).deleteMany(
+            {"_id": {"$in": idsObjectsArr}},
             function(err, result) {
                 if (err) throw err;
                 callback();
@@ -81,22 +101,21 @@ server.opts(/.*/, function(req, res, next) {
 server.post('/api/person', function(req, resp, next) {
     let body = req.body;
 
-    let counter = 0;
+    let person = null;
     try {
         // TODO validation
-        add(body, collections.person);
-        counter++;
+        add(body, collections.person, function(person) {
+            resp.send(person);
+            next();
+        });
     } catch (err) {
         console.log(err);
     }
-
-    resp.end('items added: ' + counter);
-    next();
 });
 
 server.put('/api/person/:id', function(req, resp, next) {
     let _id = req.params.id;
-    let body = JSON.parse(req.body);
+    let body = req.body;
 
     let counter = 0;
     try {
@@ -110,6 +129,23 @@ server.put('/api/person/:id', function(req, resp, next) {
     } catch (err) {
         console.log(err);
     }
+});
+
+server.del('/api/person', function(req, resp, next) {
+    let ids = req.body;
+
+    // let counter = 0;
+    try {
+        // TODO validation
+        del(ids, collections.person, function() {
+            resp.end('');
+            next();
+        });
+
+    } catch (err) {
+        console.log(err);
+    }
+
 });
 
 server.get('/api/person', function(req, resp, next) {

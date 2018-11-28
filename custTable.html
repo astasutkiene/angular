@@ -6,7 +6,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-<script src="src/script/app.js"></script>
 
 <style>
 body {
@@ -48,7 +47,7 @@ input[type=button]:nth-child(1) {
 
 <body>
 <div ng-app="main" id="table">   
-    <div ng-controller="PersonController">     
+    <div ng-show="showPage" ng-controller="PersonController">
         
         <div class="showTable">  
             <table>
@@ -63,12 +62,12 @@ input[type=button]:nth-child(1) {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="person in persons">
+                    <tr ng-repeat="(key, person) in persons">
                         <td><input type="checkbox" ng-model="person.selected" ng-change="setSelectedPerson(person)"/></td>
                         <td>{{person.name}}</td>
                         <td>{{person.surname}}</td>
                         <td>{{person.age}}</td>
-                        <td><input type="button" id="edit" class="btn btn-success" value="Edit" ng-click="editPerson(person)"></td>    
+                        <td><input type="button" id="edit" class="btn btn-success" value="Edit" ng-click="editPerson(person)"></td>
                     </tr>
                 </tbody>   
             </table>
@@ -77,7 +76,7 @@ input[type=button]:nth-child(1) {
                 <input type="text"  name="surname" ng-model="surname" placeholder="Pavardė" required>
                 <input type="text"  name="age" ng-model="age" placeholder="Amžius" required><br> 
                 <input type="button" class="btn btn-primary" value="Add" ng-click="addPerson()" ng-if="!singlePersonSelected">                
-                <input type="button" class="btn btn-danger" value="Remove" ng-click="removePerson()"> 
+                <input type="button" class="btn btn-danger" value="Remove" ng-click="removePerson()" ng-disabled="removingPersons">
 
                 <div class="alert alert-danger" role="alert" ng-if="errorMessage === true">
                     Record Already Exists!
@@ -108,7 +107,7 @@ input[type=button]:nth-child(1) {
              </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="savePerson()">Save</button>
+              <button type="button" class="btn btn-default" ng-click="savePerson()" ng-disabled="savingPerson">Save</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
@@ -116,7 +115,11 @@ input[type=button]:nth-child(1) {
         </div>
       </div>
     </div>
+    <div ng-show="!showPage"><h1 class="text-center">Loading...</h1></div>
 </div>
+
+<!--JS files-->
+<script src="src/script/app.js"></script>
 
 </body>
 </html> 
