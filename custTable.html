@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<title>CustomerTable</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="src/script/app.js"></script>
+
+<style>
+body {
+    margin: 0 auto;
+    text-align: center;
+}
+#table {
+    margin: 20px 50px;
+    
+}
+.showTable {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.showTable table,  th, td {        
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 7px 80px; 
+    
+}
+td:nth-child(1) {
+    width: 20px;
+} 
+input[type=checkbox] {
+    padding: 7px;
+    text-align: center;
+}
+.tableForm, input[type=text], input[type=button] { 
+    padding: 7px 50px;
+    margin-top: 20px;
+    text-align: center;
+}
+input[type=button]:nth-child(1) {
+    padding: 7px 15px;
+    margin-bottom: 15px;
+}   
+</style>
+
+<body>
+<div ng-app="main" id="table">   
+    <div ng-controller="PersonController">     
+        
+        <div class="showTable">  
+            <table>
+                <thead>
+                    <tr> 
+                        <th><input type="checkbox" ng-model="selectedAll" /></th>                  
+                        <th>Vardas</th>
+                        <th>Pavardė</th>
+                        <th>Amžius</th>
+                        <th>Veiksmai</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="person in persons">
+                        <td><input type="checkbox" ng-model="person.selected" ng-change="setSelectedPerson(person)"/></td>
+                        <td>{{person.name}}</td>
+                        <td>{{person.surname}}</td>
+                        <td>{{person.age}}</td>
+                        <td><input type="button" id="edit" class="btn btn-success" value="Edit" ng-click="editPerson(person)"></td>    
+                    </tr>
+                </tbody>   
+            </table>
+            <form role="form" class="tableForm" name="TableForm" ng-submit="addPerson()">           
+                <input type="text"  name="name" ng-model="name" placeholder="Vardas" required>           
+                <input type="text"  name="surname" ng-model="surname" placeholder="Pavardė" required>
+                <input type="text"  name="age" ng-model="age" placeholder="Amžius" required><br> 
+                <input type="button" class="btn btn-primary" value="Add" ng-click="addPerson()" ng-if="!singlePersonSelected">                
+                <input type="button" class="btn btn-danger" value="Remove" ng-click="removePerson()"> 
+
+                <div class="alert alert-danger" role="alert" ng-if="errorMessage === true">
+                    Record Already Exists!
+                </div>                               
+            </form>           
+        </div>
+
+        <!-- Modal -->
+<div id="edit_person" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+      
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Person {{editablePerson.name}} {{editablePerson.surname}} edit</h4>
+            </div>
+            <div class="modal-body">
+              <form onsubmit="return false;">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text"  id="name" class="form-control" name="name" ng-model="editablePerson.name" >
+                    <label for="surname">Surame</label>
+                    <input type="text"  id="surname" class="form-control" name="surname" ng-model="editablePerson.surname" >
+                    <label for="age">Age</label>
+                    <input type="text"  id="age" class="form-control" name="age" ng-model="editablePerson.age" >
+                </div>                         
+             </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="savePerson()">Save</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+      
+        </div>
+      </div>
+    </div>
+</div>
+
+</body>
+</html> 
+
