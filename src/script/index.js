@@ -53,7 +53,6 @@ function get(collection, callback) {
 
 function put(_id, newObj, collection, callback) {
     connect(function(dbo, client) {
-
         delete newObj._id;
         return dbo.collection(collection).update(
             {"_id": new mongo.ObjectID(_id)},
@@ -100,7 +99,6 @@ server.opts(/.*/, function(req, res, next) {
 
 server.post('/api/person', function(req, resp, next) {
     let body = req.body;
-
     let person = null;
     try {
         // TODO validation
@@ -116,7 +114,6 @@ server.post('/api/person', function(req, resp, next) {
 server.put('/api/person/:id', function(req, resp, next) {
     let _id = req.params.id;
     let body = req.body;
-
     let counter = 0;
     try {
         // TODO validation
@@ -133,12 +130,12 @@ server.put('/api/person/:id', function(req, resp, next) {
 
 server.del('/api/person', function(req, resp, next) {
     let ids = req.body;
-
-    // let counter = 0;
+    let counter = 0;
     try {
         // TODO validation
         del(ids, collections.person, function() {
-            resp.end('');
+            counter++;
+            resp.end('items deleted: ' + counter);
             next();
         });
 

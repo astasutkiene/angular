@@ -7,12 +7,6 @@
         $scope.savingPerson = false;
         $scope.removingPersons = false;
         $scope.persons = [];
-        // $scope.persons = [
-        //     { id: 1,  'name': 'Petras', 'surname': 'Petraitis', 'age': 28},
-        //     { id: 2, 'name': 'Jonas', 'surname': 'Jonaitis', 'age': 35},
-        //     { id: 3, 'name': 'Onutė', 'surname': 'Onaitė', 'age': 23},
-        //     { id: 4, 'name': 'Giedrė', 'surname': 'Giedraitė', 'age': 32}
-        // ];
         selected: {};
 
         var person = {
@@ -45,7 +39,6 @@
             };
             savePersonToDB(person, function(personFromDB) {
                 $scope.persons.push(personFromDB);
-
                 console.log($scope.persons);
             });
         }
@@ -53,7 +46,6 @@
         $scope.editPerson = function(person) {
             $scope.editablePerson = person;
             $("#edit_person").modal('show');
-
             console.log(person);
         }
 
@@ -78,8 +70,6 @@
                 data: angular.toJson($scope.editablePerson)
             }).then(success, error);
 
-
-
             //ajax
         }
         $scope.removePerson = function() {
@@ -93,8 +83,6 @@
 
             $scope.savingPerson = true;
             function success(response) {
-
-
                 setTimeout(function() {
                     console.log("success");
                     $scope.selectedAll = false;
@@ -107,7 +95,6 @@
                     });
                     $scope.removingPersons = false;
                     $scope.$apply();
-
                     console.log($scope.persons);
                 });
             }
@@ -130,17 +117,7 @@
             angular.forEach($scope.persons, function(person, index) {
                 person.selected = $scope.selectedAll;
             });
-        }
-
-        // function unknown() {
-        //     $scope.table.push($scope.newPerson);
-        //     console.log($scope.table);
-        //
-        //     savePersonToDB($scope.newPerson);
-        //     $scope.newPerson = {};
-        // }
-
-
+        }   
         function savePersonToDB(person, callback) {
             function success(response) {
                 callback(response.data);

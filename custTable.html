@@ -24,7 +24,7 @@ body {
 .showTable table,  th, td {        
     border: 1px solid grey;
     border-collapse: collapse;
-    padding: 7px 80px; 
+    padding: 7px 100px; 
     
 }
 td:nth-child(1) {
@@ -42,6 +42,11 @@ input[type=checkbox] {
 input[type=button]:nth-child(1) {
     padding: 7px 15px;
     margin-bottom: 15px;
+}
+#modalTable input {
+    margin: 20px 0;
+    padding: 7px 20px;
+    
 }   
 </style>
 
@@ -96,10 +101,10 @@ input[type=button]:nth-child(1) {
             </div>
             <div class="modal-body">
               <form onsubmit="return false;">
-                <div class="form-group">
+                <div class="form-group"  id="modalTable"> 
                     <label for="name">Name</label>
                     <input type="text"  id="name" class="form-control" name="name" ng-model="editablePerson.name" >
-                    <label for="surname">Surame</label>
+                    <label for="surname">Surname</label>
                     <input type="text"  id="surname" class="form-control" name="surname" ng-model="editablePerson.surname" >
                     <label for="age">Age</label>
                     <input type="text"  id="age" class="form-control" name="age" ng-model="editablePerson.age" >
