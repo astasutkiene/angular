@@ -1,0 +1,40 @@
+{
+  "name": "shop",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-be": "babel be -d be_dist",
+    "prestart": "npm run build-be",
+    "start": "node be_dist/index.js",
+    "watch-be": "npm-watch",
+    "compile": "node_modules\\.bin\\webpack.cmd",
+    "watch-fe": "webpack --progress --watch",
+    "server-fe": "webpack-dev-server --open"
+  },
+  "watch": {
+    "start": "be/*.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
+    "babel-loader": "^8.0.4",
+    "webpack": "^4.26.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "npm-watch": "^0.3.0"
+  },
+  "dependencies": {
+    "bootstrap": "^3.4.0",
+    "crypto": "^1.0.1",
+    "moment": "^2.22.2",
+    "mongodb": "^3.0.1",
+    "restify": "^6.3.4",
+    "restify-cors-middleware": "^1.1.1"
+  }
+}

@@ -1,0 +1,165 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shop</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="src/styles/style.css">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"> 
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+   <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  -->
+
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
+</head>
+
+<body>
+  <div ng-app="main" id="shopView">
+    <div ng-show="showPage" ng-controller="ProductController">
+        <div class="header">
+          <h1>The Cupcake Store</h1>        
+          <button ng-click="addNewProduct()">Add new product</button>
+          <button ng-click="viewShoppingCart()">View shopping cart</button>
+        </div>
+        <div class="row" ng-repeat="product in products">
+          <div class="col-sm-9 col-md-4">
+            <div class="productView">            
+              <!-- <img src="images/image1.jpg" alt="image"> -->
+              <!-- <img src="images/image{{product.id}}" alt="image"> -->
+              <h3 >{{product.name}} </h3> 
+              <p>{{product.description}}</p>
+              <p >&#8364 {{product.price}} </p>
+              <div class="icons">
+                <a href="#" title="View"><i class="fas fa-eye"></i></a>
+                <a href="#" title="Edit" ng-click="editProduct(product)"><i class="fas fa-edit"></i></a>
+                <a href="#" title="Remove" ng-click="removeProduct($index)" ng-disabled="removingProduct"><i class="fas fa-cut"></i></a>
+                <a href="#" title="Add to shopping cart" ng-click="addProductToShoppingCart(product)"><i class="fas fa-cart-plus"></i></a>
+              </div>            
+            </div>
+          </div>
+        </div>                   
+                 
+          <!-- Modal add new product -->
+      <div id="add_product" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+    
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title"><b>Add new product</b></h4>
+            </div>
+            <div class="modal-body">
+              <form onsubmit="return false;" >
+                <div class="form-group"  id="modalTable">                    
+                    <label for="name">Name</label>
+                    <input type="text"  id="name" class="form-control" name="name" ng-model="product.name" >
+                    <label for="description">Description</label>
+                    <input type="text"  id="description" class="form-control" name="description" ng-model="product.description" >
+                    <label for="price">Price</label>
+                    <input type="number"  id="price" class="form-control" name="price" ng-model="product.price" >
+                    <label for="image">Image</label>
+                    <input type="file"  id="image" class="form-control" name="image" ng-model="product.image" > 
+                </div>                         
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" ng-click="saveProductToDB()" ng-disabled="savingProduct">Save</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>  
+        </div>
+      </div>
+      <!--end modal add_product-->  
+
+      
+        <!-- Modal edit product-->
+        <div id="edit_product" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+        
+              <!-- Modal content-->
+              <div class="modal-content">
+                  <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Product {{editableProduct.name}} edit</h4>
+                  </div>
+                  <div class="modal-body">
+                      <form onsubmit="return false;">
+                          <div class="form-group"  id="modalTable"> 
+                              <label for="name">Name</label>
+                              <input type="text"  id="name" class="form-control" name="name" ng-model="editableProduct.name" >
+                              <label for="description">Description</label>
+                              <input type="text"  id="description" class="form-control" name="description" ng-model="editableProduct.description" >
+                              <label for="price">Price</label>
+                              <input type="text"  id="price" class="form-control" name="price" ng-model="editableProduct.price" >
+                              <label for="image">Image</label>
+                              <input type="text"  id="image" class="form-control" name="image" ng-model="editableProduct.image" >
+                          </div>                         
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" ng-click="saveEditableProduct()" ng-disabled="savingProduct">Save changes</button>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+              </div>      
+          </div>
+        </div>
+      <!--end modal edit_product-->  
+
+      <!-- Modal shopping cart -->
+      <div id="shopping_cart" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+      
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title"><b>Shopping cart</b></h3>
+              </div>
+              <div class="modal-body">
+                <div ng-show="cart.length !== 0">          
+                        <table ng-repeat = "shoppingCartProduct in cart">
+                          <tr>
+                            <td><img src="images/image1.jpg" alt="image"></td>
+                            <td>{{shoppingCartProduct.name}}</td>
+                            <td>{{shoppingCartProduct.amount}}</td>     
+                            <td>{{shoppingCartProduct.price  | currency: '€' }}</td> 
+                            <td>Sum : {{shoppingCartProduct.price *  shoppingCartProduct.amount| currency: '€' }}  </td> 
+                            <td> <i class="fa fa-trash" title="Remove from shopping cart" ng-click="removeProductFromShoppingCart($index)" 
+                              ng-disabled="removingProductFromShoppingCart"></i></td>
+                         </tr>
+                        
+                        </table>
+                        <hr>      
+                      <div class="total">   
+                        <h3 class="total"><b>Total </b>{{total | currency: '€'}}</h3>  
+                      </div> 
+                </div>
+              </div>
+              <div class="modal-footer"> 
+                <button type="button" class="btn btn-default" data-dismiss="modal">Clear cart</button>               
+                <button type="button" class="btn btn-default" data-dismiss="modal">Proceed</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+              </div>
+            </div>  
+          </div>
+        </div>
+     <!--end modal shopping_cart-->  
+
+
+    </div>
+    <div ng-show="!showPage"><h1 class="text-center">Loading...</h1>
+    </div>
+  </div>
+ 
+
+<!--JS files-->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="src/scripts/app.js"></script>
+</body>
+</html>

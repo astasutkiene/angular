@@ -1,9 +1,9 @@
+/*import moment from 'moment';*/
 var MongoClient = require('mongodb').MongoClient;
 var restify = require('restify');
 var crypto = require('crypto');
 var corsMiddleware = require('restify-cors-middleware');
 var mongo = require('mongodb');
-
 
 /**
  * Calculates the MD5 hash of a string.
@@ -19,13 +19,13 @@ var url = 'mongodb://localhost:27017';
 
 var collections = {
     values: 'values',
-    person: 'person'
+    product: 'product'
 };
 
 function connect(callback) {
     MongoClient.connect(url, function(err, client) {
         if (err) throw err;
-        var dbo = client.db("customers");
+        var dbo = client.db("shop");
         callback(dbo, client);
     });
 }
@@ -33,8 +33,8 @@ function connect(callback) {
 function add(obj, collection, callback) {
    connect(function(dbo, client) {
        dbo.collection(collection).insertOne(obj, function(err, res) {
-           if (err) throw err;
-           console.log("1 document inserted");
+           if (err) throw err;           
+           console.log("1 product inserted");
            callback(obj);
            client.close();
        });
@@ -54,9 +54,10 @@ function get(collection, callback) {
 function put(_id, newObj, collection, callback) {
     connect(function(dbo, client) {
         delete newObj._id;
-        return dbo.collection(collection).update(
+        return dbo.collection(collection).updateOne(
             {"_id": new mongo.ObjectID(_id)},
-            newObj,
+            {"$set": newObj},
+            { upsert: true },
             function(err, result) {
                 if (err) throw err;
                 callback();
@@ -97,13 +98,13 @@ server.opts(/.*/, function(req, res, next) {
     return next()
 });
 
-server.post('/api/person', function(req, resp, next) {
+server.post('/api/product', function(req, resp, next) {
     let body = req.body;
-    let person = null;
+    let product = null;
     try {
         // TODO validation
-        add(body, collections.person, function(person) {
-            resp.send(person);
+        add(body, collections.product, function(product) {
+            resp.send(product);
             next();
         });
     } catch (err) {
@@ -111,15 +112,15 @@ server.post('/api/person', function(req, resp, next) {
     }
 });
 
-server.put('/api/person/:id', function(req, resp, next) {
+server.put('/api/product/:id', function(req, resp, next) {
     let _id = req.params.id;
-    let body = req.body;
-    let counter = 0;
+    let body = req.body;    
     try {
         // TODO validation
-        put(_id, body, collections.person, function() {
-            counter++;
-            resp.end('items updated: ' + counter);
+        body.price = parseFloat(body.price);
+        
+        put(_id, body, collections.product, function() {           
+            resp.end('Product updated');
             next();
         });
 
@@ -128,14 +129,12 @@ server.put('/api/person/:id', function(req, resp, next) {
     }
 });
 
-server.del('/api/person', function(req, resp, next) {
-    let ids = req.body;
-    let counter = 0;
+server.del('/api/product', function(req, resp, next) {
+    let ids = req.body;  
     try {
         // TODO validation
-        del(ids, collections.person, function() {
-            counter++;
-            resp.end('items deleted: ' + counter);
+        del(ids, collections.product, function() {           
+            resp.end('Product deleted');
             next();
         });
 
@@ -145,9 +144,9 @@ server.del('/api/person', function(req, resp, next) {
 
 });
 
-server.get('/api/person', function(req, resp, next) {
+server.get('/api/product', function(req, resp, next) {
     try {
-        get(collections.person, function (result) {
+        get(collections.product, function (result) {
             console.log(result);
             resp.send(result);
             next();

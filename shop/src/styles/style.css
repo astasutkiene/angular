@@ -1,0 +1,80 @@
+body {
+  margin: o auto;
+  text-align: center;
+}
+body #shopView {
+  background-color: #f6f7e1;
+  height: 100%;
+}
+body #shopView .header {
+  padding-top: 20px;
+}
+body #shopView .header h1 {
+  font-family: "Lucida handwriting";
+  margin-bottom: 20px;
+}
+body #shopView .header button {
+  padding: 7px 30px;
+  background-color: #514727;
+  color: #ffffff;
+}
+body #shopView .row {
+  display: inline-block;
+  margin: 30px 10px 10px 10px;
+  vertical-align: top;
+  color: #514727;
+}
+body #shopView .row .productView {
+  position: relative;
+  width: 250px;
+  height: 300px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+}
+body #shopView .row .productView h3 {
+  font-size: 16px;
+}
+body #shopView .row .productView p {
+  font-size: 12px;
+}
+body #shopView .row .productView img {
+  width: 150px;
+  margin-top: 10px;
+}
+body #shopView .row .productView .icons {
+  font-size: 15px;
+  position: absolute;
+  bottom: 10px;
+  left: 5px;
+  right: 5px;
+}
+body #shopView .row .productView .icons a {
+  color: #514727;
+}
+body #shopView .row .productView .icons a i {
+  margin: 0 5px;
+}
+body #shopView #add_product {
+  text-align: center;
+}
+body #shopView #add_product input {
+  padding: 7px;
+  margin: 10px;
+}
+body #shopView #shopping_cart {
+  width: 750px;
+  height: 423px;
+  margin: 80px auto;
+  background: #FFFFFF;
+  box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+}
+body #shopView #shopping_cart table td {
+  padding: 30px;
+}
+body #shopView #shopping_cart table img {
+  width: 50px;
+  height: 50px;
+}
