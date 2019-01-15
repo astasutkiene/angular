@@ -1,0 +1,27 @@
+ 
+  <div id="reservation_for_employees" ng-controller="ItemController" ng-show="showPage">
+    <div class="container">
+      <h2>Rezervacijos</h2> 
+      <button><a href="#!index">Atgal</a></button>              
+      <table class="table table-bordered">
+        <thead>
+          <tr> 
+            <th>Vardas</th>
+            <th>El.paštas</th>
+            <th>Staliukas</th>
+            <th>Svečių skaičius</th>
+            <th>Laikas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in items">
+            <td>{{ item.name }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.table_number }}</td>
+            <td>{{ item.person_quantity }}</td>
+            <td>{{ item.datetime }}</td>           
+          </tr>         
+        </tbody>
+      </table>
+    </div>
+  

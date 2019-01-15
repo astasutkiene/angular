@@ -1,0 +1,26 @@
+
+  <div id="reservation_for_customer" ng-controller="ItemController">
+    <div class="header">         
+          <h3><b>Staliukų rezervacija</b></h3>
+    </div>
+    <div class="container">
+      <form onsubmit="return false;" name="myForm" novalidate>      
+        <input type="text"  id="name" class="form-control" name="name" 
+        placeholder="Vardas" ng-model="item.name" required>                                        
+        
+        <input type="email"  id="email" class="form-control" name="email"
+        placeholder="El.paštas"ng-model="item.email" required> 
+        <input type="number"  id="phone" class="form-control" name="phone"
+        placeholder="Telefonas" ng-model="item.phone" required> 
+        <input type="table_number"  id="phone" class="form-control" name="table_number"
+        placeholder="Staliukas Nr. {{ item.table_number }}">                                
+        <input type="number"  id="person_quantity" class="form-control" name="person_quantity" 
+        placeholder="Svečių skaičius" min="1" max="10" ng-model="item.person_quantity" required>            
+        <input type="datetime-local"  id="datetime" class="form-control" name="datetime" 
+        ng-model="item.datetime" required> 
+        <button type="button" class="btn btn-default" ng-click="saveItemToDB()" ng-disabled="savingItem">Rezervuoti</button>
+        <button type="button" class="btn btn-default">Uždaryti</button>   
+      </form>
+      <button><a href="index.html">Atgal</a> </button>            
+    </div>           
+  </div>

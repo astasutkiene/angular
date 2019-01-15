@@ -1,0 +1,204 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html ng-app="main" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Restaurant</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> 
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+  crossorigin="anonymous">
+  <link href="bootstrap/css/bootstrap-theme.css"  type="text/css" rel="stylesheet">  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script> 
+  <link rel="stylesheet" type="text/css" href="src/styles/style.css">  
+</head>
+
+<body>
+  <div id="view" ng-controller="ItemController">
+    <div class="showPage" ng-show="showPage">    
+        
+      <div class="header">                 
+        <nav>
+          <ul>
+            <li>
+              <a href="#">Apie mus</a>
+            </li>
+            <li>
+              <a href="#">Meniu</a>
+            </li>
+            <li>
+                <a href="#">Darbo laikas</a>
+            </li>
+            <li>
+              <a href="#">Komanda</a>
+            </li>
+            <li>
+              <a href="#" ng-click="createNewReservation()">Staliukų rezervacija</a>
+            </li>
+            <li>
+              <a href="#" ng-href="#/admin" ng-click="showAllReservations()">Darbuotojams</a>
+            </li>
+          </ul>
+        </nav>         
+      </div> 
+      
+      
+        <!-- Modal table reservation -->
+        <div id="table_map" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-lg">
+      
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title"><b>Pasirinkite staliuką</b></h3>
+               
+              </div>
+              <div class="modal-body">       
+                  <img src="src/styles/images/map_monai.png" width="765" height="509" alt="Restaurant" usemap="#tablemap">
+                  <map name="tablemap">                   
+                    <area shape="circle" coords="110,320,25" alt="table1" title="1-as staliukas, 6 asm" 
+                    ng-click="item.table_number = this.value" value="1" a href="#!customer">
+                    <area shape="circle" coords="610,300,25" alt="table2" title="2-as staliukas, 2 asm" 
+                    ng-click="item.table_number = this.value" value="2" ng-href="#!customer">
+                    <area shape="circle" coords="525,265,25" alt="table3" title="3-as staliukas, 4 asm" 
+                    ng-click="item.table_number = this.value" value="3" ng-href="#!customer">
+                    <area shape="circle" coords="480,240,25" alt="table4" title="4-as staliukas, 2 asm" 
+                    ng-click="item.table_number = this.value" value="4" ng-href="#!customer">
+                    <area shape="circle" coords="445,225,25" alt="table5" title="5-as staliukas, 2 asm" 
+                    ng-click="item.table_number = this.value" value="5" ng-href="#!customer">                   
+                    <area shape="circle" coords="300,210,25" alt="table6" title="6-as staliukas, 2 assm" 
+                    ng-click="item.table_number = this.value" value="6" ng-href="#!customer">                   
+                    <area shape="circle" coords="175,255,25" alt="table7" title="7-as staliukas, 10 asm"
+                    ng-click="item.table_number = this.value" value="7" ng-href="#!customer">
+                  </map>
+              </div>            
+                
+          </div> 
+          
+        </div>
+      </div>  
+      <!--end modal table customeration-->     
+
+    
+    
+      
+    <!--loading animation egg yolk--> 
+    <div class="loader" ng-show="!showPage">
+        <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2500/svg">
+          <defs>
+           <filter id="goo">
+               <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
+               <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -9" result="cm" />
+               <feBlend/>
+             </filter>     
+             <radialGradient id="radial-gradient" cx="20.5" cy="20.32" fx="5.9753758345333345" fy="4.511207610428622" r="23.94" gradientUnits="userSpaceOnUse">
+               <stop offset="0.43" stop-color="#feb829"/>
+               <stop offset="0.53" stop-color="#fdb125"/>
+               <stop offset="0.68" stop-color="#f99d1a"/>
+               <stop offset="0.85" stop-color="#f47c09"/>
+               <stop offset="0.92" stop-color="#f16c00"/>
+             </radialGradient>
+             <symbol id="Yolk" data-name="Yolk" viewBox="0 0 41 41">
+               <circle cx="20.5" cy="20.5" r="20.5" fill="url(#radial-gradient)"/>
+               <path d="M5.59,18.78A15,15,0,0,1,23.65,5.83" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+             </symbol>
+            
+          </defs>
+          <g class="whiteContainer" fill="#ede6e3" filter="url(#goo)">
+           
+               <circle cx="280" cy="300" r="41"/>
+               <circle cx="360" cy="300" r="41"/>
+               <circle cx="440" cy="300" r="41"/>
+               <circle cx="520" cy="300" r="41"/>
+             </g>
+          <g class="yolkContainer">
+          <use width="41" height="41" xlink:href="#Yolk" x="260" y="280"/>
+          <use width="41" height="41" xlink:href="#Yolk" x="340" y="280"/>
+          <use width="41" height="41" xlink:href="#Yolk" x="420" y="280"/>
+          <use width="41" height="41" xlink:href="#Yolk" x="500" y="280"/>
+          </g>
+         </svg>
+          <script>
+         var xmlns = "http://www.w3.org/2000/svg",
+  xlinkns = "http://www.w3.org/1999/xlink",
+  select = function(s) {
+    return document.querySelector(s);
+  },
+  selectAll = function(s) {
+    return document.querySelectorAll(s);
+  },
+    whiteContainer = select('.whiteContainer'),
+    yolkContainer = select('.yolkContainer'),
+    allWhites = selectAll('.whiteContainer circle'),
+    allYolks = selectAll('.yolkContainer use'),
+    tl
+  
+
+TweenMax.set('svg', {
+  visibility: 'visible'
+})
+
+TweenMax.set([allWhites, allYolks], {
+ transformOrigin:'50% 50%'
+})
+
+var mainTl = new TimelineMax({repeat:-1});
+
+for(var i = 0; i < 4; i++){
+ 
+TweenMax.set(allYolks[i], {
+ svgOrigin:(Number(allYolks[i].getAttribute('x'))+20.5) + ' ' + (Number(allYolks[i].getAttribute('y'))+20.5)
+}) 
+ 
+ tl = new TimelineMax({repeat:-1, repeatDelay:0.5});
+ tl.from(allWhites[i], 1, {
+  scaleX:-1,
+  ease:Elastic.easeOut.config(0.7,0.7)
+  })
+.from(allWhites[i], 1, {
+  scale:0,
+  ease:Elastic.easeOut.config(0.16,0.7)
+  },'-=1')
+ .to(allWhites[i], 1, {
+  scale:0,
+  ease:Circ.easeInOut    
+ })
+.from( allYolks[i], 0.7, {
+  scaleX:-1.3,
+  //scaleX:0.2,
+  ease:Elastic.easeOut.config(0.64,0.57)
+  },'-=2')
+.from( allYolks[i], 1, {
+  //scaleY:0,
+  scaleY:0,
+  ease:Elastic.easeOut.config(1.2,0.77)
+  },'-=2')
+ .to( allYolks[i], 1, {
+  scale:0,
+  ease:Expo.easeInOut    
+ },'-=1')
+ 
+ mainTl.add(tl, i/2)//.timeScale(3)
+}
+
+mainTl.seek(100)
+
+TweenMax.globalTimeScale(1.2)
+          </script>
+    </div>
+  </div>
+</div>
+
+<!--JS files-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-route.min.js"></script>
+<script src="src/scripts/app.js"></script>
+<script src="src/scripts/controllers.js"></script>
+<script src="src/scripts/services.js"></script>
+</body>
+</html>

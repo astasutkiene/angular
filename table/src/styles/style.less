@@ -1,0 +1,117 @@
+body {    
+    
+     
+   #view {
+    height: 100%;
+    background-image: url("images/image1.jpg");
+    min-height: 660px;   
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;  
+    position: relative;    
+    
+        .header { 
+            position: absolute;
+            margin: 20px;
+            width: auto;
+            nav {
+                overflow: hidden;
+                margin-left: 150px;               
+                              
+                ul {
+                    margin-top: 20px;
+                    li {
+                        display: inline;                        
+                        padding: 0 50px;                                       
+
+                        a {
+                            color: #eee;
+                            text-transform: uppercase;
+                            text-decoration: none;
+                            font-size: 14px;
+                            a:hover {
+                                color: brown;
+                                font-size: 24px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        #table_reservation  {
+            background-image:url('images/monai.jpg') no-repeat center cover;
+            .modal-header {
+                display: inline-block;
+                 
+                .modal-title {
+                    text-align: center;
+                }
+            }
+            .modal-body {
+                vertical-align: top;
+                .image_class {
+                    float: left;
+                    width: 65%;
+                }
+                .text_class {
+                    float: right;
+                    width: 35%;
+                    label { 
+                        margin-top: 10px;                      
+                        font-size: 16px;
+                        label:first-child() {
+                            margin-top: -20px;
+                        }                       
+                        input {
+                            padding: 5px 0;
+                            border-radius: 0;
+                            input::placeholder {
+                                margin-left: 10px;
+                                font-size: 8px;
+
+                            }
+                        }
+                    }    
+                }
+            }             
+        }    
+        
+        .loader {
+            // margin: 50px 600px;
+            // border: 16px solid #f3f3f3; 
+            // border-top: 16px solid grey; 
+            // border-radius: 50%;
+            // width: 120px;
+            // height: 120px;
+            // animation: spin 2s linear infinite;
+            background-color:#CB3F5B;
+            overflow: hidden;
+            text-align:center;
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            svg {
+                position:absolute;
+                 width:100%;
+                 height:100%;
+                 visibility:hidden;
+                 transform:translate(-50%, 0%);
+            }
+        }
+    }
+    #reservations {
+        height: 100%;
+        background-image: url("images/image1.jpg");
+        min-height: 660px;   
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;  
+        position: relative;    
+        .container {
+        text-align: center;
+        display: 50%;
+        }
+
+    }   
+}
