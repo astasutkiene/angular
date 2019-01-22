@@ -1,0 +1,24 @@
+
+  <div id="reservation_for_customer">
+    
+    <div class="container">            
+      <h3><b>Staliukų rezervacija</b></h3>      
+      <form onsubmit="return false;" name="myForm" novalidate>      
+        <input type="text"  id="name" class="form-control" name="name" 
+          placeholder="Vardas" ng-model="item.name" required>                                    
+        <input type="email"  id="email" class="form-control" name="email"
+          placeholder="El.paštas" ng-model="item.email" required> 
+        <input type="text"  id="phone" class="form-control" name="phone"
+          placeholder="Telefonas" ng-model="item.phone" ng-pattern="/0-9/" required>
+          <span  ng-show="myform.phone.$error.pattern">Not valid number!</span>
+        <input type="number"  id="table_number" class="form-control" name="table_number" disabled="disabled"
+          placeholder="Staliukas Nr. {{ item.table_number }}">                                
+        <input type="number"  id="person_quantity" class="form-control" name="person_quantity" 
+          placeholder="Svečių skaičius" min="1" max="10" ng-model="item.person_quantity" required>            
+        <input type="datetime-local"  id="datetime" class="form-control" name="datetime" 
+          placeholder="Laikas" ng-model="item.datetime" required> 
+        <button type="button" class="custom-btn" ng-click="saveItemToDB()" ng-submit="sendEmail()" ng-disabled="savingItem">Patvirtinti</button>
+        <button type="button" class="custom-btn"><a href="index.html">Uždaryti</a></button>    
+      </form>                 
+    </div>           
+  </div>

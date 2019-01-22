@@ -1,0 +1,216 @@
+body {
+  height: 100%;
+  background-image: url("images/image.jpg");
+  min-height: 660px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+body .header {
+  position: absolute;
+  margin: 20px;
+  width: auto;
+}
+body .header nav {
+  overflow: hidden;
+  margin-left: 50px;
+}
+body .header nav ul {
+  margin-top: 20px;
+}
+body .header nav ul li {
+  display: inline;
+  padding: 0 30px;
+}
+body .header nav ul li a {
+  color: #eee;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 16px;
+}
+body .header nav ul li a a:hover {
+  color: brown;
+  font-size: 24px;
+}
+body #table_map {
+  background-image: url('images/monai.jpg') no-repeat center cover;
+}
+body #table_map .modal-header {
+  display: inline-block;
+}
+body  #table_map .modal-header .modal-title {
+  text-align: center;
+}
+body #table_map .modal-body {
+  width: 50%;
+}
+
+body .loader {
+  /* margin: 50px 600px;
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid grey;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite; */
+  background-color:#CB3F5B;
+  overflow: hidden;
+  text-align:center;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+body .loader svg {
+  position:absolute;
+   width:100%;
+   height:100%;
+   visibility:hidden;
+   transform:translate(-50%, 0%);
+}
+body #reservation_for_customer {
+  height: 100%; 
+  min-height: 700px;  
+  /* background-image: url("images/image1.jpg"); */
+  /* background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative; */
+}
+body #reservation_for_customer .container {
+  text-align: center;
+  width: 35%;
+  padding-top: 100px;
+  
+}
+body #reservation_for_customer .container h3 {  
+  text-transform: uppercase; 
+  font-size: 18px;
+  color: #eee;
+}
+body #reservation_for_customer .container form input {
+  margin: 7px 0;  
+  text-align: center;
+  background-color: #485659;
+  border: none;  
+  color: #eee;
+}
+body #reservation_for_customer .container form input, ::placeholder{
+  color: #eee;
+}
+body #reservation_for_customer .container form .custom-btn {
+  width: 160px;
+  background-color: #485659;
+  padding: 7px;
+  border: none;
+  color: #eee;
+  border-radius: 5px;
+}
+body #reservation_for_customer .container form .custom-btn:hover {
+   background-color: #000000;
+}
+body #reservation_for_customer .container form .custom-btn:active {
+  background-color: #000000;
+  border-color:  #000000;; 
+}
+body #reservation_for_customer .container form .custom-btn a {
+  color: #eee;
+  text-decoration: none;
+}
+body #reservation_for_customer .container form .custom-btn a:hover {
+  text-decoration: none;
+  color: #eee;  
+}
+body #reservation_for_employees {
+  height: 100%;
+  margin-top: 10px;
+  background-color: #090a0c;
+  color:#eee;
+  /* background-image: url("images/image3.jpg"); */  
+  /* min-height: 660px;    */
+  /* background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;  
+  position: relative;     */
+}
+body #reservation_for_employees .container .custom-btn{
+  background-color: #eee;
+  padding: 5px;
+  width: 150px;
+} 
+body #reservation_for_employees .container .custom-btn:hover {
+  background-color: #000000;
+}
+body #reservation_for_employees .container .custom-btn a { 
+  text-decoration: none;
+  color: #000000;  
+}
+body #reservation_for_employees .container .custom-btn a:hover { 
+  text-decoration: none;
+  color: #ffffff;  
+}
+body #reservation_for_employees .container table {
+  margin-top: 20px;
+}
+body #reservation_for_employees .container table th {
+  vertical-align: top;
+}
+body #reservation_for_employees .container table th,td {
+  text-align: center;
+}
+body #reservation_for_employees td:nth-child(4), td:nth-child(5), td:nth-child(7){
+  width: 50px;  
+}
+body #home_page {
+  color: #eee;
+  text-transform: uppercase; 
+  font-size: 16px;
+  position: absolute;  
+  top: 40px;
+  left: 13px;
+}
+body #reservation_for_employees #edit_item .modal-header {
+  display: inline-block;
+}
+body #reservation_for_employees #edit_item .modal-title {
+  color: #000000;
+}
+body #reservation_for_employees #edit_item .form-group input {
+  margin: 5px 0;
+}
+/* body #work_hours_page {
+  height: 100%;  
+  min-height: 600px;
+  background-color: #485659;
+  color: #eee;
+  text-align: center;
+  margin-top: 100px;
+  padding-top: 50px;
+} */
+body #team_page, body #menu_page, body #about_page, body #work_hours_page {  
+  margin-top: 100px;
+  height: 100%;  
+  min-height: 600px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}  
+body #team_page {
+  background-image: url("images/team.jpg");
+}
+body #menu_page {
+  background-image: url("images/menu.jpg");
+  
+}
+body #about_page {
+  background-image: url("images/about.png");
+}
+body #work_hours_page {
+  background-image: url("images/clock.jpg");
+  color: #eee; 
+  padding: 120px 0 0 120px;
+
+}

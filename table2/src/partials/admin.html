@@ -1,0 +1,127 @@
+<div id="reservation_for_employees">
+  <div class="container">
+    <h2>Rezervacijos</h2>   
+    <button type="button" class="custom-btn"><a href="#" ng-click="createNewReservation()">Nauja rezervacija</a></button>               
+    <button type="button" class="custom-btn"><a href="index.html">Uždaryti</a></button> 
+    <table class="table table-bordered">
+      <thead>
+        <tr> 
+          <th>Vardas</th>
+          <th>El.paštas</th>
+          <th>Telefonas</th>
+          <th ng-click="sortType = 'item.table_number'; sortReverse = !sortReverse">Staliukas
+              <span ng-show="sortType == 'item.table_number' && !sortReverse" class="fa fa-caret-down"></span>
+              <span ng-show="sortType == 'item.table_number' && sortReverse" class="fa fa-caret-up"></span>
+          </th>
+          <th>Svečių skaičius</th>
+          <th ng-click="sortType = 'item.datetime'; sortReverse = !sortReverse">Laikas
+              <span ng-show="sortType == 'item.datetime' && !sortReverse" class="fa fa-caret-down"></span>
+              <span ng-show="sortType == 'item.datetime' && sortReverse" class="fa fa-caret-up"></span>
+          </th>
+          <th>Veiksmai</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in items">
+          <td>{{ item.name }}</td>
+          <td>{{ item.email }}</td>
+          <td>{{ item.phone }}</td>
+          <td>{{ item.table_number }}</td>
+          <td>{{ item.person_quantity }} asm</td>
+          <td>{{ item.datetime }}</td>
+          <td>
+            <i class="fas fa-edit"  title="Keisti" ng-click="editItem(item)"></i>
+            <i class="fa fa-trash" title="Trinti" ng-click="removeItem($index)" ng-disabled="removingItem"></i>
+          </td>           
+        </tr>         
+      </tbody>
+    </table>
+
+     <!-- Modal new_reservation -->
+     <div id="new_reservation" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+    
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <div class="modal-title"><b>Nauja rezervacija</b></div>
+            </div>
+            <div class="modal-body">
+
+
+              <!-- <div class="alert alert-danger" ng-if="product.errors && (product.errors.duplicate || product.errors.kazkas || product.errors.kazkas2)">
+                {{product.errors && product.errors.duplicate ? product.errors.duplicate : ''}}
+                {{product.errors && product.errors.kazkas ? product.errors.kazkas : ''}}
+                {{product.errors && product.errors.kazkas2 ? product.errors.kazkas2 : ''}}
+              </div> -->
+
+
+              <form onsubmit="return false;" name="myForm" novalidate>
+                <div class="form-group"  id="modalTable">                                     
+                  <input type="text"  id="name" class="form-control" name="name" 
+                  placeholder="Vardas" ng-model="item.name" required>                                    
+                  <input type="email"  id="email" class="form-control" name="email"
+                  placeholder="El.paštas"ng-model="item.email" required> 
+                  <input type="text"  id="phone" class="form-control" name="phone"
+                  placeholder="Telefonas" ng-model="item.phone" required> 
+                  <input type="number"  id="phone" class="form-control" name="table_number"
+                  placeholder="Staliukas Nr. {{ item.table_number }}">                                
+                  <input type="number"  id="person_quantity" class="form-control" name="person_quantity" 
+                  placeholder="Svečių skaičius" min="1" max="10" ng-model="item.person_quantity" required>            
+                  <input type="datetime-local"  id="datetime" class="form-control" name="datetime" 
+                  ng-model="item.datetime" required>                   
+                </div>                         
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" ng-click="saveItemToDB()" data-dismiss="modal" ng-disabled="savingItem || myForm.name.$dirty && myForm.name.$invalid">Saugoti</button>
+              
+            </div>
+          </div>  
+        </div>
+      </div>
+      <!--end modal new_reservation-->  
+
+      
+        <!-- Modal edit_item-->
+        <div id="edit_item" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+        
+              <!-- Modal content-->
+              <div class="modal-content">
+                  <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Koreguojama rezervacija:<em><b></h4>
+                  <h4 class="modal-title"><em><b>{{editableItem.table_number}}-as staliukas  {{ editableItem.datetime }}</em></b></h4>
+                  </div>
+                  <div class="modal-body">
+                      <form onsubmit="return false;">
+                          <div class="form-group"  id="modalTable">
+                              <input type="text"  id="name" class="form-control" name="name" 
+                                 placeholder="Vardas" ng-model="editableItem.name" required>                                    
+                              <input type="email"  id="email" class="form-control" name="email"
+                                placeholder="El.paštas"ng-model="editableItem.email" required> 
+                              <input type="text"  id="phone" class="form-control" name="phone"
+                                placeholder="Telefonas" ng-model="editableItem.phone" ng-pattern="/0-9/" required> 
+                              <input type="number"  id="phone" class="form-control" name="table_number"
+                                placeholder="Staliukas Nr. {{ editableitem.table_number }}">                                
+                              <input type="number"  id="person_quantity" class="form-control" name="person_quantity" 
+                                placeholder="Svečių skaičius" min="1" max="10" ng-model="editableItem.person_quantity" required>            
+                              <input type="datetime-local"  id="datetime" class="form-control" name="datetime" 
+                                ng-model="editableItem.datetime" required>                           
+                          </div>                         
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" ng-click="saveItem()" ng-disabled="savingItem">Saugoti</button>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Uždaryti</button>
+                  </div>
+              </div>      
+          </div>
+        </div>
+      <!--end modal edit_item-->  
+  </div>
+</div>
+
+ 
